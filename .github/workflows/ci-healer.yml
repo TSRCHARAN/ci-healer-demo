@@ -20,7 +20,7 @@ jobs:
       github.event.workflow_run.run_attempt > 1 ||
       startsWith(github.event.workflow_run.head_branch, 'ci-healer/')
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: TSRCHARAN/ci-healer@v1
         with:
