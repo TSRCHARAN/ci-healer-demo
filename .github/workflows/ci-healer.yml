@@ -1,0 +1,32 @@
+name: ci-healer
+
+on:
+  workflow_run:
+    workflows: ["ci"]
+    types: [completed]
+
+permissions:
+  actions: write
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: ci-healer-${{ github.event.workflow_run.head_branch }}
+
+jobs:
+  heal:
+    if: >-
+      contains(fromJSON('["failure","timed_out","startup_failure"]'), github.event.workflow_run.conclusion) ||
+      github.event.workflow_run.run_attempt > 1 ||
+      startsWith(github.event.workflow_run.head_branch, 'ci-healer/')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: TSRCHARAN/ci-healer@v1
+        with:
+          llm-provider: gemini
+          llm-model: gemini-flash-latest
+          llm-api-key: ${{ secrets.LLM_API_KEY }}
+          github-token: ${{ secrets.CI_HEALER_TOKEN || github.token }}
+          dry-run: "false"        # this is a demo: let it act
+          comment-on-prs: "true"
