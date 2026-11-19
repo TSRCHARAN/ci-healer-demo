@@ -9,4 +9,4 @@ def test_cache_warms_within_deadline():
     start = time.monotonic()
     warm_cache(backend_latency=random.uniform(0.0, 0.3))
     elapsed = time.monotonic() - start
-    assert elapsed < 0.15, f"TimeoutError: cache warm-up exceeded deadline ({elapsed:.3f}s > 0.150s)"
+    assert elapsed < 0.15, f"TimeoutError: cache warm-up took {elapsed:.3f}s (deadline 0.150s)"
