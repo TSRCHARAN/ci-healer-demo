@@ -1,7 +1,5 @@
 """Order statistics used by the shop's reports."""
 
-import math
-
 
 def mean(values: list[float]) -> float:
     if not values:
