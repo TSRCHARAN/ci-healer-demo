@@ -29,10 +29,13 @@ every `ci` run with `on: workflow_run`.
 Each **ci-healer** run in the [Actions tab](https://github.com/TSRCHARAN/ci-healer-demo/actions/workflows/ci-healer.yml)
 has a job summary with the full diagnosis.
 
-**Note on #3:** these runs used a free-tier Gemini key that was being rate-limited (429/503).
-The primary model gave up after its retries and the fallback model answered. It diagnosed the
-off-by-one correctly but declined to write the fix. Declining is an allowed outcome: ci-healer
-only opens a PR when the model is confident the fix is small and obvious.
+**Note on #3:** both the main and the fallback Gemini model diagnosed it precisely
+(*"median([4, 1, 3, 2]) returned 3.5 instead of 2.5"*) and both declined to fix it. That's the
+honest answer from what they were shown: the classifier sees the **CI log**, and the broken
+line in `shop/stats.py` never appears in it, because `median()` didn't crash; it returned a
+wrong number. From the log alone you can't tell a one-line fix from a redesign. Lint errors
+point at `file:line`, which is why #1 got a fix PR. Letting the fix step follow imports and read
+the source (read-only) is the next feature on ci-healer's roadmap.
 
 **Note on #2:** the flaky test is *simulated* (slow on a run's first attempt, fast on re-run) so
 the demo shows the retry → learn path every time instead of on a coin toss.
