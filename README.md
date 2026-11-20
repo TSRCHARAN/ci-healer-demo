@@ -52,7 +52,9 @@ the demo shows the retry → learn path every time instead of on a coin toss.
   follows the failing test's imports and shows the fixer the source.
 - A healer job was killed by the workflow timeout mid-retry and reported nothing: v1.0.4 gives
   every LLM question a wall-clock budget, so the job always finishes and reports.
+- Both repos were public without a license, which legally means nobody may use them: v1.0.5
+  adds the MIT license, and `v1` now points at it.
 
 Everything here is intentionally broken in public. Nothing in these branches is meant to be merged.
 
-Licensed under [MIT](LICENSE).
+Licensed under [MIT](LICENSE), like ci-healer itself since v1.0.5.
