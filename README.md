@@ -54,3 +54,5 @@ the demo shows the retry → learn path every time instead of on a coin toss.
   every LLM question a wall-clock budget, so the job always finishes and reports.
 
 Everything here is intentionally broken in public. Nothing in these branches is meant to be merged.
+
+Licensed under [MIT](LICENSE).
